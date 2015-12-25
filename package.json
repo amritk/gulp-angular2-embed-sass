@@ -1,0 +1,32 @@
+{
+    "name": "gulp-angular2-embed-sass",
+    "version": "0.0.1",
+    "description": "A gulp plugin to compile styleUrls with sass to css and include them as strings under style.",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:amritk/gulp-angular2-embed-sass.git"
+    },
+    "keywords": [
+        "gulpplugin",
+        "gulp",
+        "plugin",
+        "angular2",
+        "embed",
+        "sass",
+        "style",
+        "styleUrls"
+    ],
+    "author": "Amrit Kahlon<amrit@hockey-community.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/amritk/gulp-angular2-embed-sass/issues"
+    },
+    "homepage": "https://github.com/amritk/gulp-angular2-embed-sass",
+    "dependencies": {
+        "gulp-util": "^3.0.6",
+        "through2": "^2.0.0"
+    },
+    "_npmVersion": "0.0.1",
+    "_nodeVersion": "0.0.1"
+}
