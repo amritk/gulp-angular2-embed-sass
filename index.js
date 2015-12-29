@@ -1,9 +1,10 @@
-var through = require('through2');
-var gutil = require('gulp-util');
-var pathModule = require('path');
+var through     = require('through2');
+var gutil       = require('gulp-util');
+var pathModule  = require('path');
+var sass        = require('node-sass');
+var fs          = require('fs');
+var PluginError = gutil.PluginError;
 // var jsStringEscape = require('js-string-escape');
-// var fs = require('fs');
-// var PluginError = gutil.PluginError;
 
 // Constants
 const PLUGIN_NAME = 'gulp-angular2-embed-sass';
@@ -12,10 +13,8 @@ module.exports = function (options) {
 
     options = options || {};
 
-    const TEMPLATE_URL_PATTERN = '[\'"]?styleUrls[\'"]?[\\s]*:[\\s]*[\'"]([^\'"]+)[\'"]';
-
     var content;
-    var styleUrlRegexp;
+    var styleUrlRegexp =  /[\'"\s]*styleUrls[\'"\s]*:[\s]*\[(.*)\]/;
 
     const FOUND_SUCCESS = {};
     const FOUND_ERROR = {};
@@ -33,20 +32,21 @@ module.exports = function (options) {
      * @param {Function} cb callback function to call when
      */
     function replace(filePath, cb) {
-        console.log(content);
-        var matches = styleUrlRegexp.exec(content);
 
-        console.log('matches: ' + matches);
+        var matches = styleUrlRegexp.exec(content);
 
         if (matches === null) {
             cb(CODE_EXIT);
             return;
         }
 
-        var relativeTemplatePath = matches[1];
-        var path = pathModule.join(filePath, relativeTemplatePath);
+        var relativeTemplatePath = matches[1].replace(/['"]/g,"").split(',');
+        var path = pathModule.join(filePath, relativeTemplatePath[0]);
+        console.log(filePath);
+        console.log(relativeTemplatePath[0]);
+        console.log(path);
 
-        console.log('template path: ' + path);
+        console.log('sass path: ' + path);
 
         if (options.maxSize) {
             var fileStats = fs.statSync(path);
@@ -58,23 +58,39 @@ module.exports = function (options) {
             }
         }
 
-        fs.readFile(path, {encoding: options.templateEncoding}, function(err, templateContent) {
+        fs.readFile(path, {encoding: 'utf-8'}, function(err, templateContent) {
+
+            console.log(templateContent);
+            console.log(err);
             if (err) {
+                console.log('eee');
                 cb(FOUND_ERROR, 'Can\'t read template file: "' + path + '". Error details: ' + err);
                 return;
             }
 
-            minimizer.parse(templateContent, function (err, minifiedContent) {
-                if (err) {
-                    cb(FOUND_ERROR, 'Error while minifying angular template "' + path + '". Error from "minimize" plugin: ' + err);
-                    return;
-                }
+            console.log(templateContent);
 
-                cb(FOUND_SUCCESS, {
-                    regexpMatch : matches,
-                    template: minifiedContent
-                });
-            });
+            // cb(FOUND_SUCCESS, {
+            //     regexpMatch : matches,
+            //     template: templateContent
+            // });
+
+            // sass.render({
+            //   file: scss_filename,
+            //   [, options..]
+            // }, function(err, result) { /*...*/ });
+
+            // minimizer.parse(templateContent, function (err, minifiedContent) {
+            //     if (err) {
+            //         cb(FOUND_ERROR, 'Error while minifying angular template "' + path + '". Error from "minimize" plugin: ' + err);
+            //         return;
+            //     }
+
+            //     cb(FOUND_SUCCESS, {
+            //         regexpMatch : matches,
+            //         template: minifiedContent
+            //     });
+            // });
         });
     }
 
@@ -110,7 +126,6 @@ module.exports = function (options) {
 
         var pipe = this;
         content = file.contents.toString('utf-8');
-        styleUrlRegexp = new RegExp(TEMPLATE_URL_PATTERN, 'g');
         var entrances = [];
 
         console.log('\nfile.path: ' + file.path);
