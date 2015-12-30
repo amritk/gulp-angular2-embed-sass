@@ -47,6 +47,10 @@ module.exports = function (options) {
           file: path,
         }, function(err, result) {
 
+            if (err) {
+                cb(FOUND_ERROR, 'Error while compiling sass template "' + path + '". Error from "node-sass" plugin: ' + err);
+            }
+
             cb(FOUND_SUCCESS, {
                 regexpMatch : matches,
                 template: result.css.toString()
