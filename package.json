@@ -1,44 +1,47 @@
 {
-    "name": "gulp-angular2-embed-sass",
-    "version": "0.0.1",
-    "description": "A gulp plugin to compile styleUrls with sass to css and include them as strings under style.",
-    "main": "index.js",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:amritk/gulp-angular2-embed-sass.git"
-    },
-    "scripts": {
-        "test": "mocha"
-    },
-    "keywords": [
-        "gulpplugin",
-        "gulp",
-        "plugin",
-        "angular2",
-        "embed",
-        "sass",
-        "style",
-        "styleUrls"
-    ],
-    "author": "Amrit Kahlon<amrit@hockey-community.com>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/amritk/gulp-angular2-embed-sass/issues"
-    },
-    "homepage": "https://github.com/amritk/gulp-angular2-embed-sass",
-    "dependencies": {
-        "gulp-util": "^3.0.6",
-        "through2": "^2.0.0",
-        "node-sass": "^3.4.2"
-    },
-    "files": [
-        "index.js",
-        "Readme.md"
-    ],
-    "devDependencies": {
-        "mocha": "^2.3.2",
-        "assert": "^1.3.0"
-    },
-    "_npmVersion": "3.3.6",
-    "_nodeVersion": "5.0.0"
+  "name": "gulp-angular2-embed-sass",
+  "version": "0.0.1",
+  "description": "A gulp plugin to compile styleUrls with sass to css and include them as strings under style.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/amritk/gulp-angular2-embed-sass.git"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "gulpplugin",
+    "gulp",
+    "plugin",
+    "angular2",
+    "embed",
+    "sass",
+    "style",
+    "styleUrls"
+  ],
+  "author": "Amrit Kahlon <amrit@hockey-community.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amritk/gulp-angular2-embed-sass/issues"
+  },
+  "homepage": "https://github.com/amritk/gulp-angular2-embed-sass",
+  "dependencies": {
+    "gulp-util": "^3.0.6",
+    "through2": "^2.0.0",
+    "node-sass": "^3.4.2"
+  },
+  "files": [
+    "index.js",
+    "Readme.md"
+  ],
+  "devDependencies": {
+    "mocha": "^2.3.2",
+    "assert": "^1.3.0"
+  },
+  "_npmVersion": "3.3.6",
+  "_nodeVersion": "5.0.0",
+  "directories": {
+    "test": "test"
+  }
 }
