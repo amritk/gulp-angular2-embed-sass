@@ -22,7 +22,7 @@ module.exports = function (options) {
     const FOUND_ERROR   = {};
     const CODE_EXIT     = {};
 
-    var debug = true;
+    var debug = false;
     function log() {
         if (debug) {
             console.log.apply(console, arguments);

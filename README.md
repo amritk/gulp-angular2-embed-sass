@@ -5,7 +5,7 @@ Needs massive cleanup, refactorization, options, source-maps, and docs, but it w
 
 ## Install
 ```
-npm install gulp-angular2-embed-sass --save-dev
+npm i gulp-angular2-embed-sass --save-dev
 ````
 ## Example
 In your gulpfile.js:
