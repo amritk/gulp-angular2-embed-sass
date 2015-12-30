@@ -3,10 +3,11 @@ A gulp plugin to compile styleUrls with sass to css and include them as strings 
 
 Needs massive cleanup, refactorization, options, source-maps, and docs, but it works! Pull requests are welcome.
 
-## Example
+## Install
 ```
 npm install gulp-angular2-embed-sass --save-dev
 ````
+## Example
 In your gulpfile.js:
 ```
 var gulp      = require('gulp');
