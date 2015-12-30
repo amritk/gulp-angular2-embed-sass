@@ -19,3 +19,8 @@ gulp.task('embedSass', function() {
         .pipe(gulp.dest('destinationPath'));
 });
 ```
+## Acknowledgements
+Inspired by https://github.com/laxa1986/gulp-angular-embed-templates
+
+## Licence
+This module is released under the MIT license.

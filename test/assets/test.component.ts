@@ -1,9 +1,9 @@
 import {Component} from 'angular2/core';
 
 @Component({
-    selector: 'hc-community',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    selector: 'app',
+    templateUrl: 'test/assets/test.component.html',
+    styleUrls: ['test/assets/test.component.scss', 'test/assets/test.component2.scss']
 })
 
 export class AppComponent { }
