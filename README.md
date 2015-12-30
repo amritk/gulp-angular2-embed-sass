@@ -5,10 +5,10 @@ Needs massive cleanup, refactorization, options, source-maps, and docs, but it w
 
 ## Example useage
 In your gulpfile.js
+```
 var gulp      = require('gulp');
 var embedSass = require('gulp-angular2-embed-sass');
 
-```
 gulp.task('embedSass', function() {
     gulp.src('targetPath')
         .pipe(embedSass())
