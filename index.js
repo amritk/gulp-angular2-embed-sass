@@ -73,7 +73,7 @@ module.exports = function (options) {
             parts.push(Buffer(entrances[i].template.replace(/\n/g, '')));
 
             if (i < entrances.length - 1) {
-                parts.push(Buffer('\', \''));
+                parts.push(Buffer('\',\n\t\t\t \''));
             }
 
         }
