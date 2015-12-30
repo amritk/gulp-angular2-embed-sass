@@ -1,6 +1,6 @@
 {
   "name": "gulp-angular2-embed-sass",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A gulp plugin to compile styleUrls with sass to css and include them as strings under style.",
   "main": "index.js",
   "repository": {
