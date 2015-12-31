@@ -92,15 +92,15 @@ module.exports = function (options) {
         base    = options.basePath ? options.basePath : pathModule.dirname(file.path);
         matches = styleUrlRegexp.exec(content);
 
-        log('\nfile.path: ' + file.path);
-        log('matches: ' + matches[1]);
-
         // No matches
         //
         if (matches === null) {
             compileCallback(CODE_EXIT);
             return;
         }
+
+        log('\nfile.path: ' + file.path);
+        log('matches: ' + matches[1]);
 
         var sassPaths = matches[1].replace(/[\ '"]/g,"").split(',');
         compileSass(sassPaths, compileCallback);
