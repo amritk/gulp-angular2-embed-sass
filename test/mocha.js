@@ -28,7 +28,7 @@ describe('gulp-angular2-embed-sass', function () {
                 '@Component({\n' +
                 '    selector: \'app\',\n' +
                 '    templateUrl: \'test/assets/test.component.html\',\n' +
-                '    styles: [\'h1 {  font-size: 200px; }\', \'h5 {  color: red; }\']\n' +
+                '    styles: [`h1 {  font-size: 200px; }\', \'h5 {  color: red; }`]\n' +
                 '})\n\n' +
                 'export class AppComponent { }\n'
             );
