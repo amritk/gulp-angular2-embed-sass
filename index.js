@@ -39,12 +39,14 @@ module.exports = function (options) {
 
             sass.render({
               file: path,
+              includePaths: options.includePaths || []
             },
             function(err, result) {
                 if (err) {
                     cb(FOUND_ERROR, 'Error while compiling sass template "' + path + '". Error from "node-sass" plugin: ' + err);
                 }
-                cb(FOUND_SUCCESS, result.css.toString(), sassPaths);
+                // escape any backticks that comeup in the compiled css
+                cb(FOUND_SUCCESS, result.css.toString().replace(/\\([\s\S])|(`)/g,"\\$1$2"), sassPaths);
             });
         }
         else {
@@ -68,7 +70,6 @@ module.exports = function (options) {
         }
         parts.push(Buffer('`]'));
         parts.push(Buffer(content.substr(matches.index + matches[0].length)));
-
         return Buffer.concat(parts);
     }
 
