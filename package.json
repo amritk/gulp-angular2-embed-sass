@@ -27,9 +27,11 @@
   },
   "homepage": "https://github.com/amritk/gulp-angular2-embed-sass",
   "dependencies": {
+    "autoprefixer": "^6.4.0",
     "gulp-util": "^3.0.6",
-    "through2": "^2.0.0",
-    "node-sass": "^3.4.2"
+    "node-sass": "^3.4.2",
+    "postcss": "^5.1.2",
+    "through2": "^2.0.0"
   },
   "files": [
     "index.js",
