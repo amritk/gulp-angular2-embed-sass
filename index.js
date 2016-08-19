@@ -2,6 +2,8 @@ var through        = require('through2');
 var gutil          = require('gulp-util');
 var pathModule     = require('path');
 var sass           = require('node-sass');
+var autoprefixer   = require('autoprefixer');
+var postcss        = require('postcss');
 var PluginError    = gutil.PluginError;
 
 
@@ -45,8 +47,19 @@ module.exports = function (options) {
                 if (err) {
                     cb(FOUND_ERROR, 'Error while compiling sass template "' + path + '". Error from "node-sass" plugin: ' + err);
                 }
-                // escape any backticks that comeup in the compiled css
-                cb(FOUND_SUCCESS, result.css.toString().replace(/\\([\s\S])|(`)/g,"\\$1$2"), sassPaths);
+
+                if (options.autoprefixer) {
+                  // Call autoprefixer on current built css
+                  postcss([ autoprefixer(options.autoprefixer) ])
+                    .process(result.css)
+                    .then(function(prefixedResult) {
+                      // escape any backticks that comeup in the compiled css
+                      cb(FOUND_SUCCESS, prefixedResult.css.toString().replace(/\\([\s\S])|(`)/g,"\\$1$2"), sassPaths);
+                    });
+                } else {
+                  // escape any backticks that comeup in the compiled css
+                  cb(FOUND_SUCCESS, result.css.toString().replace(/\\([\s\S])|(`)/g,"\\$1$2"), sassPaths);
+                }
             });
         }
         else {
