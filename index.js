@@ -2,6 +2,8 @@ var through        = require('through2');
 var gutil          = require('gulp-util');
 var pathModule     = require('path');
 var sass           = require('node-sass');
+var less           = require('less');
+var fs             = require('fs');
 var autoprefixer   = require('autoprefixer');
 var postcss        = require('postcss');
 var PluginError    = gutil.PluginError;
@@ -67,6 +69,42 @@ module.exports = function (options) {
         }
     }
 
+    // Calls sass compiler on the file
+    //
+    function compileLess(lessPaths, cb) {
+
+        if (lessPaths.length > 0) {
+
+            var path = pathModule.join(base, lessPaths.shift());
+            var content = fs.readFileSync(path, 'utf8');
+
+            less.render(
+              content,
+            
+            function(err, result) {
+                if (err) {
+                    cb(FOUND_ERROR, 'Error while compiling less template "' + path + '". Error from "less" plugin: ' + err);
+                }
+
+                if (options.autoprefixer) {
+                  // Call autoprefixer on current built css
+                  postcss([ autoprefixer(options.autoprefixer) ])
+                    .process(result.css)
+                    .then(function(prefixedResult) {
+                      // escape any backticks that comeup in the compiled css
+                      cb(FOUND_SUCCESS, prefixedResult.css.toString().replace(/\\([\s\S])|(`)/g,"\\$1$2"), lessPaths);
+                    });
+                } else {
+                  // escape any backticks that comeup in the compiled css
+                  cb(FOUND_SUCCESS, result.css.toString().replace(/\\([\s\S])|(`)/g,"\\$1$2"), lessPaths);
+                }
+            });
+        }
+        else {
+            cb(CODE_EXIT);
+        }
+    }
+
     // Writes the new css strings to the file buffer
     //
     function joinParts(entrances) {
@@ -90,6 +128,10 @@ module.exports = function (options) {
 
         var pipe      = this;
         var entrances = [];
+        var compilers = {
+            sass: compileSass,
+            less: compileLess
+        }
 
         // Ignore empty files
         //
@@ -105,6 +147,7 @@ module.exports = function (options) {
         content = file.contents.toString('utf-8');
         base    = options.basePath ? options.basePath : pathModule.dirname(file.path);
         matches = styleUrlRegexp.exec(content);
+        var compiler = compilers[options.type || 'sass'];
 
         // No matches
         //
@@ -117,14 +160,14 @@ module.exports = function (options) {
         log('matches: ' + matches[1]);
 
         var sassPaths = matches[1].replace(/[\ '"]/g,"").split(',');
-        compileSass(sassPaths, compileCallback);
+        compiler(sassPaths, compileCallback);
 
 
         function compileCallback(code, _string, sassPaths) {
 
             if (code === FOUND_SUCCESS) {
                 entrances.push(_string);
-                compileSass(sassPaths, compileCallback);
+                compiler(sassPaths, compileCallback);
             }
             else if (code === FOUND_ERROR) {
                 if (options.skipErrors) {
@@ -133,7 +176,7 @@ module.exports = function (options) {
                         gutil.colors.yellow('[Warning]'),
                         gutil.colors.magenta(_string)
                     );
-                    compileSass(sassPaths, compileCallback);
+                    compiler(sassPaths, compileCallback);
                 } else {
                     pipe.emit('error', new PluginError(PLUGIN_NAME, _string));
                 }
