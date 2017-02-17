@@ -111,7 +111,7 @@ module.exports = function (options) {
 
         var parts = [];
         parts.push(Buffer(content.substring(0, matches.index)));
-        parts.push(Buffer('styles: [`'));
+        parts.push(Buffer('styles: [\''));
 
         for (var i=0; i<entrances.length; i++) {
             parts.push(Buffer(entrances[i].replace(/\n/g, '')));
@@ -119,7 +119,7 @@ module.exports = function (options) {
                 parts.push(Buffer('\', \''));
             }
         }
-        parts.push(Buffer('`]'));
+        parts.push(Buffer('\']'));
         parts.push(Buffer(content.substr(matches.index + matches[0].length)));
         return Buffer.concat(parts);
     }
