@@ -80,7 +80,7 @@ module.exports = function (options) {
 
             less.render(
               content,
-            
+
             function(err, result) {
                 if (err) {
                     cb(FOUND_ERROR, 'Error while compiling less template "' + path + '". Error from "less" plugin: ' + err);
@@ -111,15 +111,15 @@ module.exports = function (options) {
 
         var parts = [];
         parts.push(Buffer(content.substring(0, matches.index)));
-        parts.push(Buffer('styles: [\''));
+        parts.push(Buffer('styles: [`'));
 
         for (var i=0; i<entrances.length; i++) {
             parts.push(Buffer(entrances[i].replace(/\n/g, '')));
             if (i < entrances.length - 1) {
-                parts.push(Buffer('\', \''));
+                parts.push(Buffer('`, `));
             }
         }
-        parts.push(Buffer('\']'));
+        parts.push(Buffer('`]'));
         parts.push(Buffer(content.substr(matches.index + matches[0].length)));
         return Buffer.concat(parts);
     }
