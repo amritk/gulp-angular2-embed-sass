@@ -116,7 +116,7 @@ module.exports = function (options) {
         for (var i=0; i<entrances.length; i++) {
             parts.push(Buffer(entrances[i].replace(/\n/g, '')));
             if (i < entrances.length - 1) {
-                parts.push(Buffer('`, `));
+                parts.push(Buffer('`, `'));
             }
         }
         parts.push(Buffer('`]'));
