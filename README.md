@@ -1,9 +1,7 @@
 # gulp-angular2-embed-sass [![Build Status](https://travis-ci.org/amritk/gulp-angular2-embed-sass.svg?branch=master)](https://travis-ci.org/amritk/gulp-angular2-embed-sass)
 A gulp plugin to compile styleUrls with sass to css and include them as strings under style.
 
-Needs massive cleanup, refactorization, options, source-maps, and docs, but it works! Pull requests are welcome.
-
-Stopped work on this for now as I've switched back to angular 1.5 until angular 2 is ready for production. Will resume when I switch back.
+*I have switched to Vue.js now, I will still merge pull requests but someone can take over this plugin if they wish.
 
 ## Install
 ```
